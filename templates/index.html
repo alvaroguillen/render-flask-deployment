@@ -1,115 +1,92 @@
 <!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Registro de Personas</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-gray-100">
-    <header class="bg-lime-950 p-4 text-white">
-      <nav class="max-w-6xl mx-auto flex justify-between items-center">
-        <a href="#" class="text-lg font-bold">QR Médico</a>
-        <ul class="flex space-x-4">
-          <li>
-            <a href="#" class="hover:text-blue-500">Inicio</a>
-          </li>
-          <li>
-            <a href="#" class="hover:text-blue-500">Acerca</a>
-          </li>
-        </ul>
-      </nav>
-    </header>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AidEx</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/png">
 
-    <main class="max-w-6xl mx-auto p-4 mt-6">
-      <h1 class="text-2xl font-bold mb-6">Registro Médico de Emergencia</h1>
+</head>
+<body>
+    <div class="header">
+        <img src="{{ url_for('static', filename='images/aidex - copia.png') }}" class="logo" alt="logo">
+        <li>
+            <a href="{{ url_for('consultar_registro') }}" class="nav-link">Consultar datos</a>
+            <a href="{{ url_for('ver_registro') }}" class="nav-link">Ver Registros</a>
+        </li>
+    </div>
+    <div class="contenedor">
+        <div class="izquierda">
+            <img src="{{ url_for('static', filename='images/logopri.png') }}" class="logotipo" alt="logotipo">
+        </div>
 
-      <div class="flex flex-col gap-6">
-        <!-- Formulario -->
-        <form class="bg-white p-4 rounded shadow" action="/crear-registro" method="post">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-gray-700 mb-1">Nombre</label>
-              <input type="text" name="nombre" class="w-full p-2 border rounded" required />
-            </div>
+        <div class="derecha">
+            <h2>Carga tus datos aca</h2>
+            <form id="form-registro" action="/crear-registro" method="post" class="formulario">
+                <div style="display: flex; gap: 20px;">
+                    <div class="columna-izquierda">
+                        <label for="nombre">Nombre y Apellido</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Ej: Elba Lazo" required>
 
-            <div>
-              <label class="block text-gray-700 mb-1">Apellido</label>
-              <input type="text" name="apellido" class="w-full p-2 border rounded" required />
-            </div>
+                        <label for="cedula">Numero de cedula</label>
+                        <input type="text" id="cedula" name="cedula" placeholder="Ej: 5550199" required>
 
-            <div>
-              <label class="block text-gray-700 mb-1">Fecha de Nacimiento</label>
-              <input type="date" name="fecha_nacimiento" class="w-full p-2 border rounded" required />
-            </div>
+                        <label for="fecha">Fecha de nacimiento</label>
+                        <input type="date" id="fecha" name="fecha">
 
-            <div>
-              <label class="block text-gray-700 mb-1">Número de Cédula</label>
-              <input type="text" name="numero_cedula" class="w-full p-2 border rounded" required />
-            </div>
+                        <label for="email">Correo electronico</label>
+                        <input type="email" id="email" name="email" placeholder="Ingresa tu email">
 
-            <div>
-              <label class="block text-gray-700 mb-1">Grupo Sanguíneo</label>
-              <input type="text" name="grupo_sanguineo" class="w-full p-2 border rounded" required />
-            </div>
+                        <label for="contacto">Contacto de emergencia</label>
+                        <input type="text" id="contacto" name="contacto" placeholder="Numero de una persona de confianza" required>
+                    </div>
 
-            <div>
-              <label class="block text-gray-700 mb-1">Alergias</label>
-              <input type="text" name="alergia" class="w-full p-2 border rounded" />
-            </div>
+                    <div class="columna-derecha">
+                        <label for="enfermedad">Tenes alguna enfermedad cronica?</label>
+                        <input type="text" id="enfermedad" name="enfermedad" placeholder="Deja este campo en blanco si no">
 
-            <div>
-              <label class="block text-gray-700 mb-1">Enfermedades Crónicas</label>
-              <input type="text" name="enfermedades_cronicas" class="w-full p-2 border rounded" />
-            </div>
+                        <label for="alergia">Tenes alguna alergia?</label>
+                        <input type="text" id="alergia" name="alergia" placeholder="Deja este campo en blanco si no">
 
-            <div>
-              <label class="block text-gray-700 mb-1">Medicamentos Actuales</label>
-              <input type="text" name="medicamentos_actuales" class="w-full p-2 border rounded" />
-            </div>
+                        <label for="medicamento">Estas tomando algun medicamento?</label>
+                        <input type="text" id="medicamento" name="medicamento" placeholder="Deja este campo en blanco si no">
 
-            <div class="md:col-span-2">
-              <label class="block text-gray-700 mb-1">Contacto de Emergencia</label>
-              <input type="tel" name="contacto_de_emergencia" class="w-full p-2 border rounded" required />
-            </div>
-          </div>
+                        <label for="comentarios">Comentarios adicionales</label>
+                        <input type="text" id="comentarios" name="comentarios" placeholder="Alguna aclaracion que creas necesaria?">
 
-          <button type="submit" class="mt-4 bg-lime-700 text-white px-4 py-2 rounded hover:bg-lime-800 hover:font-bold">
-            Registrar Persona
-          </button>
-        </form>
-
-        <!-- Lista de personas -->
-        <section class="bg-white p-4 rounded shadow">
-          <div class="bg-lime-950 text-white p-2 rounded mb-4">
-            <h2 class="text-xl font-bold">Personas Registradas</h2>
-          </div>
-
-          <ul class="space-y-4">
-            {% for persona in persona %}
-              <li class="border p-4 rounded shadow flex flex-col md:flex-row justify-between items-start md:items-center">
-                <div>
-                  <p><strong>{{ persona.nombre }} {{ persona.apellido }}</strong></p>
-                  <p class="text-sm text-gray-600">C.I: {{ persona.numero_cedula }}</p>
-                  <p class="text-sm text-gray-600">Emergencia: {{ persona.contacto_emergencia }}</p>
+                        <label for="tipoSangre">Tipo de Sangre</label>
+                        <div class="radio-container">
+                            <label><input type="radio" name="tipoSangre" value="A+" required> A+</label>
+                            <label><input type="radio" name="tipoSangre" value="A-"> A-</label>
+                            <label><input type="radio" name="tipoSangre" value="B+"> B+</label>
+                            <label><input type="radio" name="tipoSangre" value="B-"> B-</label>
+                            <label><input type="radio" name="tipoSangre" value="O+"> O+</label>
+                            <label><input type="radio" name="tipoSangre" value="O-"> O-</label>
+                            <label><input type="radio" name="tipoSangre" value="AB+"> AB+</label>
+                            <label><input type="radio" name="tipoSangre" value="AB-"> AB-</label>
+                        </div>
+                    </div>
                 </div>
 
-                {% if persona.codigo_qr %}
-                  <img src="{{ persona.codigo_qr }}" alt="QR" class="w-32 h-32 mt-4 md:mt-0" />
-                {% else %}
-                  <p class="text-red-600">QR no generado</p>
-                {% endif %}
+                <button type="submit">Cargar datos</button>
 
-                <form action="/eliminar-registro/{{ persona.id }}" method="post">
-                  <button class="mt-2 md:mt-0 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">Eliminar</button>
-                </form>
-              </li>
-            {% else %}
-              <li>No hay personas registradas.</li>
-            {% endfor %}
-          </ul>
-        </section>
-      </div>
-    </main>
-  </body>
+                <label class="checkbox-label">
+                    <div class="tyc">
+                        <input type="checkbox" required> Acepto los 
+                        <a href="tyc.html" class="nav-link">terminos y condiciones</a>
+                    </div>
+                </label>
+            </form>
+            <script>
+    
+</script>
+
+        </div>
+    </div>
+</body>
+<div class="footer">
+    <img src="{{ url_for('static', filename='images/aidex.png') }}" class="logo2"/>
+    <h3>© 2025 Todo el dinero resevado para comprar pod.</h3>
+</div>
 </html>
